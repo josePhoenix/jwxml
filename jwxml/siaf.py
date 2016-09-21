@@ -12,10 +12,6 @@ _log = logging.getLogger('jwxml')
 
 FRAMES = ('Det', 'Sci', 'Idl', 'Tel')
 
-if not os.path.isdir(PRD_DATA_ROOT):
-    raise RuntimeError("Could not find SIAF data "
-                       "in {}".format(PRD_DATA_ROOT))
-
 # ---------------------------------------------------------------------------------
 #  SIAF related classes
 
@@ -457,6 +453,9 @@ class SIAF(object):
         if filename is None:
             if basepath is None:
                 basepath = PRD_DATA_ROOT
+            if not os.path.isdir(basepath):
+                raise RuntimeError("Could not find SIAF data "
+                                   "in {}".format(basepath))
             self.filename = os.path.join(basepath, instr + '_SIAF.xml')
         else:
             self.filename = filename
