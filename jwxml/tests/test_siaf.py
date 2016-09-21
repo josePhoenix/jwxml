@@ -46,20 +46,20 @@ def test_transform_out_to_in(nircam_a4):
     # -- The Tel frame ref point is {V2,V3}Ref
     assert pair_almost_equal(nca.Tel2Det(v2_ref, v3_ref), (nca.XDetRef, nca.YDetRef))
 
-def test_det2sci(nircam_a4):
+def test_det2sci_reversible(nircam_a4):
     nca = nircam_a4
 
     assert pair_almost_equal(nca.Det2Sci(*nca.Sci2Det(1020., 1020)), (1020., 1020))
     assert pair_almost_equal(nca.Sci2Det(*nca.Det2Sci(1020., 1020)), (1020., 1020))
 
-def test_tel2idl(nircam_a4):
+def test_tel2idl_reversible(nircam_a4):
     nca = nircam_a4
 
     assert pair_almost_equal(nca.Tel2Idl(*nca.Idl2Tel(10., 10)), (10., 10))
     assert pair_almost_equal(nca.Idl2Tel(*nca.Tel2Idl(10., 10)), (10., 10))
 
 @pytest.mark.xfail
-def test_tel2sci(nircam_a4):
+def test_tel2sci_reversible(nircam_a4):
     nca = nircam_a4
 
     assert pair_almost_equal(nca.Tel2Sci(*nca.Sci2Tel(10., 10)), (10., 10))
