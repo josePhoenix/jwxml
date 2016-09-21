@@ -54,6 +54,9 @@ setup(
         # Pick your license as you wish (should match "license" above)
         'License :: OSI Approved :: BSD License',
 
+        # OS support
+        'Operating System :: OS Independent',
+
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
         'Programming Language :: Python :: 2',
