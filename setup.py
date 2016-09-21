@@ -81,7 +81,7 @@ setup(
     # for example:
     # $ pip install -e .[dev,test]
     extras_require={
-        'dev': ['check-manifest>=0.34', 'lxml>=3.6.4'],
+        'dev': ['check-manifest>=0.34', 'lxml>=3.6.4', 'pytest>=3.0.2'],
     },
 
     # If there are data files included in your packages that need to be
