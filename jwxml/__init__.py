@@ -14,3 +14,8 @@ from .siaf import Aperture, SIAF
 from .constants import PRD_VERSION, PRD_DATA_ROOT
 
 __all__ = ['Segment_Update', 'SUR', 'Aperture', 'SIAF', 'PRD_DATA_ROOT', 'PRD_VERSION']
+
+import os.path
+
+with open(os.path.join(os.path.dirname(__file__), 'VERSION')) as f:
+    __version__ = f.read().strip()
