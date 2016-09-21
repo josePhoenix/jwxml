@@ -10,11 +10,6 @@ import os.path
 
 _log = logging.getLogger('jwxml')
 
-try:
-    from webbpsf import utils
-except ImportError:
-    utils = None
-
 FRAMES = ('Det', 'Sci', 'Idl', 'Tel')
 
 if not os.path.isdir(PRD_DATA_ROOT):
