@@ -17,7 +17,8 @@ before_install:
   - export PATH=/home/travis/miniconda2/bin:$PATH
   - conda update --yes conda
   # pre-install compiled dependencies for faster build
-  - conda install --yes python=$TRAVIS_PYTHON_VERSION numpy matplotlib lxml
+  - conda create -n test --yes python=$TRAVIS_PYTHON_VERSION numpy matplotlib lxml
+  - source activate test
 install:
   # installs jwxml and any PyPI dependencies declared in setup.py
   - pip install -e .[dev]
