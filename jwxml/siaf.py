@@ -296,10 +296,12 @@ class Aperture(object):
         if ax is None:
             ax = plt.gca()
             ax.set_aspect('equal')
-            if frame == 'Idl' or frame == 'Tel':
+            if frame == 'Tel':
                 ax.set_xlabel('V2 [{0}]'.format(units))
                 ax.set_ylabel('V3 [{0}]'.format(units))
-
+            elif frame == 'Idl':
+                ax.set_xlabel('Ideal X [{0}]'.format(units))
+                ax.set_ylabel('Ideal Y [{0}]'.format(units))
             elif frame == 'Sci' or frame == 'Det':
                 ax.set_xlabel('X pixels [{0}]'.format(frame))
                 ax.set_ylabel('Y pixels [{0}]'.format(frame))
