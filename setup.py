@@ -19,7 +19,7 @@ with open(path.join(root, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 with open(path.join(root, NAME, 'VERSION'), encoding='utf-8') as f:
-    version = f.read()
+    version = f.read().strip()
 
 setup(
     name=NAME,
