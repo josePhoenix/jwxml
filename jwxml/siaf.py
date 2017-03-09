@@ -264,11 +264,12 @@ class Aperture(object):
         return self.convert(self.XIdlVert, self.YIdlVert, 'Idl', frame)
 
     def center(self, frame='Tel'):
-        """ Return the defining center point of the aperture"""
+        """ Return the defining reference point of the aperture,
+        which is often but not always the center."""
         return self.convert(self.V2Ref, self.V3Ref, 'Tel', frame)
 
     def plot(self, frame='Idl', label=True, ax=None, title=True, units='arcsec', annotate=False,
-             color=None):
+             mark_ref=False, color=None, **kwargs):
         """ Plot this one aperture
 
         Parameters
@@ -284,11 +285,16 @@ class Aperture(object):
             one of 'arcsec', 'arcmin', 'deg'
         annotate : bool
             Add annotations for detector (0,0) pixels
+        mark_ref : bool
+            Add marker for the (V2Ref, V3Ref) reference point defining this aperture.
         title : str
             If set, add a label to the plot indicating which frame was plotted.
         color : matplotlib-compatible color
             Color specification for this aperture's outline,
             passed through to `matplotlib.Axes.plot`
+
+        Other matplotlib standard parameters may be passed in via **kwargs
+        to adjust the style of the displayed lines.
         """
         if units is None:
             units = 'arcsec'
@@ -334,12 +340,16 @@ class Aperture(object):
                 verticalalignment='center',
                 horizontalalignment='center',
                 rotation=rotation,
-                color=ax.lines[-1].get_color()
+                color=ax.lines[-1].get_color(), **kwargs
             )
         if title:
             ax.set_title("{0} frame".format(frame))
         if annotate:
             self.plotDetectorOrigin(frame=frame)
+        if mark_ref:
+            v2ref, v3ref = self.center(frame=frame)
+            ax.plot([v2ref], [v3ref], marker='+', **kwargs,
+                    color=ax.lines[-1].get_color())
 
     def plotDetectorOrigin(self, frame='Idl', which='both'):
         """ Draw red and blue squares to indicate the raw detector
@@ -505,7 +515,7 @@ class SIAF(object):
         return fullaps
 
     def plot(self, frame='Tel', names=None, label=True, units=None, clear=True, annotate=False,
-             subarrays=True):
+             mark_ref=False, subarrays=True, **kwargs):
         """ Plot all apertures in this SIAF
 
         Parameters
@@ -522,8 +532,14 @@ class SIAF(object):
             Clear plot before plotting (set to false to overplot)
         annotate : bool
             Add annotations for detector (0,0) pixels
+        mark_ref : bool
+            Add markers for the reference (V2Ref, V3Ref) point in each apertyre
         frame : str
             Which coordinate system to plot in: 'Tel', 'Idl', 'Sci', 'Det'
+
+        Other matplotlib standard parameters may be passed in via **kwargs
+        to adjust the style of the displayed lines.
+
         """
         if clear: plt.clf()
         ax = plt.subplot(111)
@@ -539,7 +555,7 @@ class SIAF(object):
             if names is not None:
                 if ap.AperName not in names: continue
 
-            ap.plot(frame=frame, label=label, ax=ax, units=None)
+            ap.plot(frame=frame, label=label, ax=ax, units=None, mark_ref=mark_ref, **kwargs)
             if annotate:
                 ap.plotDetectorOrigin(frame=frame)
         ax.set_xlabel('V2 [arcsec]')
