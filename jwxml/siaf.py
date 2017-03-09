@@ -348,8 +348,8 @@ class Aperture(object):
             self.plotDetectorOrigin(frame=frame)
         if mark_ref:
             v2ref, v3ref = self.center(frame=frame)
-            ax.plot([v2ref], [v3ref], marker='+', **kwargs,
-                    color=ax.lines[-1].get_color())
+            ax.plot([v2ref], [v3ref], marker='+',
+                    color=ax.lines[-1].get_color(), **kwargs)
 
     def plotDetectorOrigin(self, frame='Idl', which='both'):
         """ Draw red and blue squares to indicate the raw detector
